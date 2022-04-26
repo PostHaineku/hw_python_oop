@@ -72,6 +72,7 @@ class SportsWalking(Training):
     coeff_calories_walking_1 = 0.035
     coeff_calories_walking_2 = 2
     coeff_calories_walking_3 = 0.029
+    MINS_INTO_SECONDS = 60
     """Тренировка: спортивная ходьба."""
     def __init__(self, action, duration, weight, height):
         super().__init__(action, duration, weight)
@@ -80,7 +81,7 @@ class SportsWalking(Training):
         spent_calories = ((self.coeff_calories_walking_1 * self.weight 
                 + (self.get_mean_speed**self.coeff_calories_walking_2 // self.height) 
                 * self.coeff_calories_walking_3*self.weight) 
-                * self.duration*60)
+                * self.duration*self.MINS_INTO_SECONDS)
         return spent_calories
 
     pass
