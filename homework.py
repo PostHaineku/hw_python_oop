@@ -82,7 +82,7 @@ class Running(Training):
         spent_calories = ((self.coeff_calories_running_1
                            * self.get_mean_speed()
                           - self.coeff_calories_running_2)
-                          * self.weight/self.M_IN_KM
+                          * self.weight / self.M_IN_KM
                           * self.duration
                           * self.MINS_INTO_SECONDS)
         return spent_calories
@@ -108,8 +108,8 @@ class SportsWalking(Training):
         spent_calories = ((self.coeff_calories_walking_1 * self.weight
                            + (self.mean_speed**self.coeff_calories_walking_2
                               // self.height)
-                           * self.coeff_calories_walking_3*self.weight)
-                          * self.duration*self.MINS_INTO_SECONDS)
+                           * self.coeff_calories_walking_3 * self.weight)
+                          * self.duration * self.MINS_INTO_SECONDS)
         return spent_calories
 
     pass
