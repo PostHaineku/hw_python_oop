@@ -43,8 +43,8 @@ class Training:
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        raise NotImplementedError('Определите get_spent_calories в %s.'
-                                  % (type(self).__name__))
+        raise NotImplementedError(f'Определите get_spent_calories в'
+                                  f'{type(self).__name__}')
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
@@ -56,10 +56,11 @@ class Training:
 
 
 class Running(Training):
+    """Тренировка: бег."""
     RUNNING_FACTOR: int = 18
     RUNNING_SPEED_DECREASEMENT: int = 20
     HOURS_INTO_MINS: int = 60
-    """Тренировка: бег."""
+
     def get_spent_calories(self) -> float:
         return ((self.RUNNING_FACTOR
                  * self.get_mean_speed()
@@ -70,11 +71,12 @@ class Running(Training):
 
 
 class SportsWalking(Training):
+    """Тренировка: спортивная ходьба."""
     CALORIES_PER_MINUTE: float = 0.035
     MEAN_SPEED_COEFF: int = 2
     SPORTSWALKING_CALORIES_FACTOR: float = 0.029
     HOURS_INTO_MINS: int = 60
-    """Тренировка: спортивная ходьба."""
+
     def __init__(self,
                  action: int,
                  duration: float,
@@ -93,11 +95,12 @@ class SportsWalking(Training):
 
 
 class Swimming(Training):
+    """Тренировка: плавание."""
     SWIMMING_SPEED_INCREASEMENT: float = 1.1
     SWIMMING_FACTOR: int = 2
     M_IN_KM: int = 1000
     LEN_STEP: float = 1.38
-    """Тренировка: плавание."""
+
     def __init__(self,
                  action: int,
                  duration: float,
@@ -150,7 +153,3 @@ if __name__ == '__main__':
     for workout_type, data in packages:
         training = read_package(workout_type, data)
         main(training)
-# я голову сломал, думая где еще нужны полные аннотации
-# попробовал аннотировать packages, как Sequence[str, Tuple[float, ...]]
-# но тогда все ломается, было бы здорово если бы вы объяснили нужно ли
-# аннотировать получаемые пакеты
