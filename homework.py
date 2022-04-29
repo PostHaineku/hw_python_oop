@@ -1,3 +1,4 @@
+from typing import Union, Sequence
 from dataclasses import dataclass
 
 
@@ -42,15 +43,16 @@ class Training:
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
+        raise NotImplementedError('Определите get_spent_calories в %s.'
+                                  % (type(self).__name__))
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
-        message = InfoMessage(type(self).__name__,
-                              self.duration,
-                              self.get_distance(),
-                              self.get_mean_speed(),
-                              self.get_spent_calories())
-        return message
+        return InfoMessage(type(self).__name__,
+                           self.duration,
+                           self.get_distance(),
+                           self.get_mean_speed(),
+                           self.get_spent_calories())
 
 
 class Running(Training):
@@ -119,18 +121,17 @@ class Swimming(Training):
         return self.action * self.LEN_STEP / self.M_IN_KM
 
 
-def read_package(workout_type: str, data: list) -> Training:
+def read_package(workout_type: str,
+                 data: Sequence[Union[int, float]]) -> Training:
     """Прочитать данные полученные от датчиков."""
     trainings: dict[str:type[Training]] = {
         'SWM': Swimming,
         'RUN': Running,
         'WLK': SportsWalking
     }
-    res = trainings.get(workout_type, None)
-    if res is not None:
-        return trainings[workout_type](*data)
-    else:
-        return f'<Ошибка>, тип тренировки {workout_type} не поддерживается.'
+    if workout_type not in trainings:
+        raise KeyError(f'Неизвестное значение: {workout_type}')
+    return trainings[workout_type](*data)
 
 
 def main(training: Training) -> None:
@@ -149,3 +150,7 @@ if __name__ == '__main__':
     for workout_type, data in packages:
         training = read_package(workout_type, data)
         main(training)
+# я голову сломал, думая где еще нужны полные аннотации
+# попробовал аннотировать packages, как Sequence[str, Tuple[float, ...]]
+# но тогда все ломается, было бы здорово если бы вы объяснили нужно ли
+# аннотировать получаемые пакеты
