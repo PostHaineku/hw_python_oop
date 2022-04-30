@@ -23,6 +23,7 @@ class Training:
     """Базовый класс тренировки."""
     LEN_STEP: float = 0.65
     M_IN_KM: int = 1000
+    HOURS_INTO_MINS: int = 60
 
     def __init__(self,
                  action: int,
@@ -59,7 +60,6 @@ class Running(Training):
     """Тренировка: бег."""
     RUNNING_FACTOR: int = 18
     RUNNING_SPEED_DECREASEMENT: int = 20
-    HOURS_INTO_MINS: int = 60
 
     def get_spent_calories(self) -> float:
         return ((self.RUNNING_FACTOR
@@ -75,7 +75,6 @@ class SportsWalking(Training):
     CALORIES_PER_MINUTE: float = 0.035
     MEAN_SPEED_COEFF: int = 2
     SPORTSWALKING_CALORIES_FACTOR: float = 0.029
-    HOURS_INTO_MINS: int = 60
 
     def __init__(self,
                  action: int,
@@ -98,7 +97,6 @@ class Swimming(Training):
     """Тренировка: плавание."""
     SWIMMING_SPEED_INCREASEMENT: float = 1.1
     SWIMMING_FACTOR: int = 2
-    M_IN_KM: int = 1000
     LEN_STEP: float = 1.38
 
     def __init__(self,
